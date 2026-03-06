@@ -120,7 +120,11 @@ app.post('/api/developer-prompt', async (req, res) => {
     }
 });
 
-// Start Server
-app.listen(PORT, () => {
-    console.log(`J. Servo Architect Server running on port ${PORT}`);
-});
+// Start Server (Local only)
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`J. Servo Architect Server running on port ${PORT}`);
+    });
+}
+
+export default app;
