@@ -1,0 +1,1434 @@
+<style>
+:root {
+    --primary: #804199;
+    --primary-light: #a86ee0;
+    --secondary: #20aacf;
+    --accent: #04ac8c;
+    --surface: rgba(30, 20, 46, 0.22);
+    --surface-strong: rgba(32, 20, 44, 0.36);
+    --glass-border: rgba(255, 255, 255, 0.14);
+    --glass-border-strong: rgba(255, 255, 255, 0.24);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.82);
+    --text-muted: rgba(255, 255, 255, 0.62);
+    --danger: #f16f30;
+    --success: #10b981;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background: transparent;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 32px;
+    background: rgba(18, 14, 32, 0.65);
+    backdrop-filter: blur(26px);
+    -webkit-backdrop-filter: blur(26px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+    box-shadow:
+        0 22px 60px rgba(5, 12, 25, 0.55),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    padding: 48px 48px 40px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(128, 65, 153, 0.25), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(32, 170, 207, 0.2), transparent 60%);
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 16px;
+    justify-items: center;
+}
+
+.hero-logo {
+    width: clamp(76px, 18vw, 320px);
+    border-radius: 25px;
+    border: 4px double rgba(255, 255, 255, 0.14);
+    box-shadow: 0 14px 36px rgba(10, 8, 24, 0.4);
+    object-fit: cover;
+}
+
+.header-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    padding: 8px 68px;
+    border-radius: 99px;
+    background: rgba(128, 65, 153, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #fdf4ff;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.brand-name {
+    font-size: clamp(2.3rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+}
+
+.tagline {
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 22px;
+}
+
+.intro-copy {
+    color: var(--text-secondary);
+    max-width: 1000px;
+    margin: 0 auto;
+    font-size: 1.02rem;
+    line-height: 1.75;
+    text-align: justify;
+    text-justify: inter-word;
+    padding: 0 16px;
+}
+
+.intro-copy-ar {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.98rem;
+    color: rgba(255, 255, 255, 0.78);
+    direction: rtl;
+    font-family: 'Syne', 'Cairo', 'Tajawal', sans-serif;
+    text-align: center;
+    text-justify: inter-word;
+}
+
+.lead-magnet-banner {
+    margin-top: 24px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(128, 65, 153, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 18px 26px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    box-shadow: 0 16px 36px rgba(8, 10, 25, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+    color: inherit;
+}
+
+.lead-magnet-banner:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 12px 14px rgba(128, 65, 153, 0.35);
+}
+
+.banner-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.banner-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.comparison-card {
+    background: rgba(10, 12, 24, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 26px;
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    box-shadow:
+        0 28px 70px rgba(3, 9, 18, 0.55),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+}
+
+.comparison-header {
+    background: rgba(18, 16, 30, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 32px 28px;
+    text-align: center;
+}
+
+.comparison-title {
+    font-size: 2.35rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #fcf8ff;
+}
+
+.comparison-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin-top: 12px;
+}
+
+.instructions-ar {
+    margin-top: 10px;
+    font-size: 0.96rem;
+    color: rgba(255, 255, 255, 0.86);
+    direction: rtl;
+    line-height: 1.65;
+}
+
+.comparison-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 28px;
+    flex-wrap: wrap;
+    background: rgba(12, 14, 28, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.control-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.control-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.selection-summary {
+    padding: 0 28px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.selection-summary.hidden {
+    display: none;
+}
+
+.selection-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    background: rgba(128, 65, 153, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.85rem;
+}
+
+.chip-remove {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.primary-btn,
+.ghost-btn,
+.show-all-btn,
+.sticky-compare-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease, background 0.3s ease;
+    box-shadow:
+        0 6px 20px rgba(31, 38, 135, 0.25),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.primary-btn::before,
+.ghost-btn::before,
+.show-all-btn::before,
+.sticky-compare-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    pointer-events: none;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow:
+            0 6px 20px rgba(31, 38, 135, 0.25),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+    50% {
+        box-shadow:
+            0 6px 30px rgba(128, 65, 153, 0.35),
+            0 0 50px rgba(32, 170, 207, 0.2),
+            inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+    }
+    100% {
+        box-shadow:
+            0 6px 20px rgba(31, 38, 135, 0.25),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+}
+
+.primary-btn:hover:not(:disabled),
+.ghost-btn:hover:not(:disabled),
+.show-all-btn:hover:not(:disabled),
+.sticky-compare-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    animation: pulse-glow 2s infinite;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(32, 170, 207, 0.5);
+}
+
+.primary-btn:hover:not(:disabled)::before,
+.ghost-btn:hover:not(:disabled)::before,
+.show-all-btn:hover:not(:disabled)::before,
+.sticky-compare-btn:hover::before {
+    width: 320px;
+    height: 320px;
+}
+
+.primary-btn {
+    background: rgba(34, 26, 62, 0.65);
+    border-color: rgba(128, 65, 153, 0.45);
+}
+
+.ghost-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+}
+
+.primary-btn:disabled,
+.ghost-btn:disabled,
+.show-all-btn:disabled {
+    opacity: 0.52;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 3px 12px rgba(10, 12, 24, 0.25);
+    animation: none;
+}
+
+.primary-btn:disabled::before,
+.ghost-btn:disabled::before,
+.show-all-btn:disabled::before {
+    width: 0;
+    height: 0;
+}
+
+.show-all-btn {
+    background: rgba(34, 26, 62, 0.65);
+    border-color: rgba(128, 65, 153, 0.45);
+}
+
+.filters-section {
+    padding: 24px 28px 26px;
+    background: rgba(10, 12, 25, 0.58);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filters-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filters-title::before {
+    content: '🔍';
+    font-size: 1.35rem;
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.filter-select,
+.filter-input {
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(15, 18, 32, 0.5);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.filter-select:focus,
+.filter-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.34);
+    box-shadow: 0 0 0 3px rgba(128, 65, 153, 0.25);
+}
+
+.filter-select option {
+    background: #120c22;
+    color: var(--text-primary);
+}
+
+.filter-input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.active-filters:empty {
+    display: none;
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    background: rgba(128, 65, 153, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.85rem;
+}
+
+.filter-tag button {
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.results-info {
+    margin-top: 18px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-align: center;
+}
+
+.results-info-ar {
+    margin-top: 6px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    direction: rtl;
+    line-height: 1.5;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    padding: 32px 28px;
+}
+
+.tool-card {
+    position: relative;
+    padding: 18px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition: transform 0.25s ease, border 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 280px;
+    box-shadow: 0 20px 45px rgba(5, 8, 24, 0.45);
+}
+
+.tool-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 26px 52px rgba(8, 12, 32, 0.5);
+}
+
+.tool-card.selected {
+    border-color: var(--secondary);
+    box-shadow: 0 24px 44px rgba(32, 170, 207, 0.32);
+}
+
+.compare-checkbox {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+
+.tool-category {
+    font-size: 0.75rem;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.tool-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.tool-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.tool-pricing {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 6px;
+}
+
+.pricing-note {
+    margin-top: 4px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.78);
+    direction: rtl;
+    line-height: 1.4;
+}
+
+.pricing-pill {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 110px;
+}
+
+.pricing-pill-ar {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.pricing-free {
+    background: rgba(16, 185, 129, 0.16);
+    color: #b7ffef;
+}
+
+.pricing-freemium {
+    background: rgba(32, 170, 207, 0.16);
+    color: #b5ecff;
+}
+
+.pricing-paid {
+    background: rgba(241, 111, 48, 0.16);
+    color: #ffd1bb;
+}
+
+.tool-rating {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.stars {
+    font-size: 0.95rem;
+}
+
+.rating-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.tool-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.tool-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.features-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.4px;
+}
+
+.features-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.feature-tag {
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.tool-recommendation {
+    margin-top: auto;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    background: rgba(128, 65, 153, 0.18);
+    border-radius: 12px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.recommendation-ar {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.45;
+    direction: rtl;
+}
+
+.recommendation-en {
+    font-size: 0.84rem;
+}
+
+.sticky-compare-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 99;
+    padding: 15px 28px;
+    white-space: nowrap;
+    background: rgba(34, 26, 62, 0.65);
+    border-color: rgba(128, 65, 153, 0.45);
+    box-shadow: 0 26px 48px rgba(18, 10, 36, 0.5);
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease, background 0.3s ease;
+}
+
+.sticky-compare-btn.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.sticky-compare-btn:hover {
+    box-shadow: 0 30px 54px rgba(22, 14, 42, 0.58);
+}
+
+.sticky-compare-btn .badge {
+    background: rgba(255, 255, 255, 0.92);
+    color: #4a1f6f;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+}
+
+.show-all-container {
+    padding: 0 28px 140px;
+    text-align: center;
+}
+
+.show-all-btn {
+    width: 100%;
+    max-width: 240px;
+}
+
+.comparison-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+}
+
+.comparison-table-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.comparison-table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.24);
+    border-radius: 999px;
+}
+
+.comparison-table-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.comparison-cards-mobile {
+    display: none;
+    margin-top: 20px;
+    gap: 16px;
+}
+
+.comparison-mobile-card {
+    background: rgba(10, 12, 28, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 18px 40px rgba(4, 6, 18, 0.45);
+}
+
+.comparison-mobile-card h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.comparison-mobile-meta {
+    display: grid;
+    gap: 12px;
+}
+
+.comparison-mobile-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.comparison-mobile-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-muted);
+}
+
+.comparison-mobile-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.comparison-mobile-features span {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.comparison-card-inline {
+    display: none;
+    margin: 0 28px 28px;
+    background: rgba(6, 10, 24, 0.6);
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 24px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 26px 50px rgba(5, 10, 22, 0.45);
+}
+
+.finder-cta {
+    margin: 24px 28px 36px;
+    background: rgba(8, 12, 28, 0.6);
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 28px 32px;
+    text-align: center;
+    box-shadow: 0 22px 44px rgba(5, 10, 22, 0.45);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.finder-cta h3 {
+    font-size: 1.35rem;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.finder-copy-en {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.7;
+    max-width: 640px;
+    text-align: center;
+}
+
+.finder-copy-ar {
+    font-size: 0.96rem;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.7;
+    direction: rtl;
+    max-width: 640px;
+    text-align: center;
+}
+
+.finder-cta .cta-button {
+    align-self: center;
+    margin-top: 4px;
+}
+
+.comparison-card-inline.active {
+    display: block;
+}
+
+.comparison-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.comparison-card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.comparison-table-inline {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    min-width: 720px;
+}
+
+.comparison-table-inline th,
+.comparison-table-inline td {
+    padding: 14px 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.comparison-table-inline th {
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 0.92rem;
+}
+
+.comparison-table-inline tbody tr:nth-child(even) td {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.table-ar {
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+    direction: rtl;
+    line-height: 1.45;
+}
+
+.comparison-insights {
+    margin-top: 22px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.96rem;
+}
+
+.insights-ar {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.86);
+    direction: rtl;
+    line-height: 1.7;
+}
+
+.comparison-insights p + .insight-tips {
+    margin-top: 16px;
+}
+
+.insight-tips {
+    background: rgba(32, 170, 207, 0.16);
+    border: 1px solid rgba(32, 170, 207, 0.28);
+    border-radius: 16px;
+    padding: 16px 18px;
+}
+
+.insight-tips ul {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.insight-tips li {
+    margin-bottom: 8px;
+}
+
+.tip-ar {
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.85);
+    direction: rtl;
+    margin-top: 4px;
+}
+
+.comparison-actions {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.share-feedback {
+    margin-top: 10px;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+.share-feedback.success {
+    color: var(--success);
+}
+
+.share-feedback.error {
+    color: var(--danger);
+}
+
+.faq-section {
+    margin-top: 48px;
+    background: rgba(10, 12, 26, 0.55);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+}
+
+.faq-header {
+    padding: 32px;
+    background: rgba(18, 16, 30, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    text-align: center;
+}
+
+.faq-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #fcf8ff;
+}
+
+.faq-subtitle {
+    color: var(--text-secondary);
+}
+
+.faq-content {
+    padding: 28px;
+}
+
+.faq-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 18px 0;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+}
+
+.faq-question:hover {
+    color: var(--primary-light);
+}
+
+.faq-toggle {
+    font-size: 1.3rem;
+    margin-left: 14px;
+    color: var(--primary-light);
+}
+
+.faq-answer {
+    display: none;
+    margin-top: 12px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+.faq-answer-ar {
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.85);
+    direction: rtl;
+    line-height: 1.7;
+}
+
+.faq-question.active + .faq-answer {
+    display: block;
+}
+
+.cta-section {
+    margin-top: 48px;
+    background: rgba(6, 8, 20, 0.6);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 34px;
+    text-align: center;
+    backdrop-filter: blur(20px);
+}
+
+.cta-title {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    color: #f2ecff;
+}
+
+.cta-text {
+    color: var(--text-secondary);
+    line-height: 1.75;
+}
+
+.cta-text-ar {
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.82);
+    direction: rtl;
+    line-height: 1.8;
+}
+
+.contact-info {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.contact-item {
+    padding: 12px 22px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: var(--text-primary);
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.contact-item:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.footer {
+    margin-top: 38px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.footer-link:hover {
+    color: #fff;
+}
+
+@media (max-width: 1024px) {
+    .comparison-title {
+        font-size: 2rem;
+    }
+    .tools-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        padding: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 28px 16px 60px;
+    }
+    .header {
+        padding: 32px 20px;
+    }
+    .brand-name {
+        font-size: 2rem;
+    }
+    .comparison-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .control-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .selection-summary {
+        padding: 0 20px 18px;
+    }
+    .filters-grid {
+        grid-template-columns: 1fr;
+    }
+    .tools-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        padding: 22px 20px;
+    }
+    .sticky-compare-btn {
+        left: 16px;
+        right: 16px;
+        bottom: 18px;
+        justify-content: center;
+    }
+    .cta-section {
+        padding: 28px 20px;
+    }
+    .show-all-container {
+        padding: 0 20px 170px;
+    }
+    .finder-cta {
+        margin: 20px 16px 32px;
+        padding: 22px;
+    }
+    .comparison-card-inline {
+        margin: 0 16px 24px;
+        padding: 20px 18px;
+    }
+}
+
+@media (max-width: 640px) {
+    .comparison-table-wrapper {
+        display: none;
+    }
+    .comparison-cards-mobile {
+        display: grid;
+    }
+}
+
+@media (max-width: 480px) {
+    .comparison-title {
+        font-size: 1.7rem;
+    }
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+    .tool-card {
+        min-height: auto;
+    }
+    .control-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .primary-btn,
+    .ghost-btn {
+        width: 100%;
+    }
+    .comparison-card-inline {
+        padding: 18px 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
+
+<div id="ai-comparison-tool">
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <img src="https://jservo.com/wp-content/uploads/2025/11/ai-comparison-tool-hero-banner-logo.webp" alt="AI Comparison Tool by J. SERVO" class="hero-logo">
+                <div class="header-badge">J. SERVO AI Suite</div>
+                <a href="https://jservo.com" class="logo-link" target="_blank" rel="noopener">
+                    <div class="brand-name">J. SERVO LLC.</div>
+                </a>
+                <div class="tagline">AI Comparison Tool - Your AI Partner In Business</div>
+                <p class="intro-copy">
+                    Explore the J. SERVO AI Tools Comparison Hub to quickly benchmark more than seventy AI platforms for marketing, operations, finance, customer success, and IT teams. Review verified pricing, enterprise security, and recommended use cases, then compare up to three tools side-by-side to pinpoint the best-fit solution for your digital transformation roadmap.
+                    <span class="intro-copy-ar">مرحباً بك في مساحة المقارنة الشاملة لمنظومة حلول الذكاء الاصطناعي من ج. سيرفو. هنا يمكنك تصفّح أبرز المنصات الذكية، مقارنة الأسعار والمزايا الأمنية، واختيار الأنسب لفرق التسويق، المبيعات، خدمة العملاء، الشؤون المالية، والعمليات بكفاءة وسرعة.</span>
+                </p>
+                <a id="leadMagnetBanner" class="lead-magnet-banner" href="https://jservo.com/AI%20Best%20Practices%20and%20Safety%20Guide.pdf?_t=1759919004" target="_blank" rel="noopener">
+                    <span class="banner-title">Get FREE AI Best Practices & Guidelines</span>
+                    <span class="banner-subtitle">Professional Standards for Responsible AI Usage</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="comparison-card">
+            <div class="comparison-header">
+                <h1 class="comparison-title">AI Tools Comparison Hub</h1>
+                <p class="comparison-subtitle">Filter, search, and compare 70+ AI tools with expert annotations.</p>
+                <p class="instructions-ar">استخدم شريط البحث، وقوائم التصنيف والتسعير لاختيار الأدوات المناسبة، ثم حدد حتى ثلاث أدوات واضغط على «قارن الأدوات» لمشاهدة التحليل المفصل بالعربية والإنجليزية.</p>
+            </div>
+
+            <div class="comparison-controls">
+                <div class="control-copy">
+                    <strong>Select tools to compare:</strong>
+                    <span id="selectedCount">0/3 selected</span>
+                </div>
+                <div class="control-actions">
+                    <button type="button" id="clearSelectionBtn" class="ghost-btn" disabled>Clear Selection</button>
+                    <button type="button" id="compareBtn" class="primary-btn" disabled>
+                        Compare Selected
+                        <span class="compare-count" id="compareCount">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="selectionSummary" class="selection-summary hidden" aria-live="polite"></div>
+
+            <button type="button" id="stickyCompareBtn" class="sticky-compare-btn">
+                Compare Tools
+                <span class="badge" id="stickyBadge">0</span>
+            </button>
+
+            <div class="filters-section">
+                <div class="filters-header">
+                    <div class="filters-title">Filter & Search Tools</div>
+                    <button type="button" class="ghost-btn" id="clearFiltersBtn">Clear Filters</button>
+                </div>
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label class="filter-label" for="categoryFilter">Category</label>
+                        <select id="categoryFilter" name="categoryFilter" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="conversational">Conversational AI</option>
+                            <option value="image">Image Generation</option>
+                            <option value="marketing">Marketing & Copy</option>
+                            <option value="productivity">Productivity</option>
+                            <option value="development">Development</option>
+                            <option value="automation">Automation</option>
+                            <option value="video">Video & Audio</option>
+                            <option value="design">Design & Creative</option>
+                            <option value="data">Data & Analytics</option>
+                            <option value="customer_support">Customer Support</option>
+                            <option value="sales">Sales Enablement</option>
+                            <option value="hr">HR & Talent</option>
+                            <option value="education">Learning & Training</option>
+                            <option value="finance">Finance & Operations</option>
+                            <option value="security">Security & Compliance</option>
+                            <option value="research">Research & Intelligence</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label" for="pricingFilter">Pricing</label>
+                        <select id="pricingFilter" name="pricingFilter" class="filter-select">
+                            <option value="all">All Pricing</option>
+                            <option value="free">Free</option>
+                            <option value="freemium">Freemium</option>
+                            <option value="paid">Paid</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label" for="searchFilter">Search</label>
+                        <input type="search" id="searchFilter" name="searchFilter" class="filter-input" placeholder="Search by tool name, use case, or keyword">
+                    </div>
+                </div>
+                <div id="activeFilters" class="active-filters"></div>
+                <div class="results-info" id="resultsInfo">Loading curated tools...</div>
+                <div class="results-info results-info-ar" id="resultsInfoAr">جاري تحميل قائمة الأدوات المتاحة...</div>
+            </div>
+
+            <div class="tools-grid" id="toolsGrid"></div>
+
+            <div id="comparisonCardInline" class="comparison-card-inline">
+                <div class="comparison-card-header">
+                    <h3 class="comparison-card-title">Tool Comparison</h3>
+                    <button type="button" id="closeComparisonCard" class="ghost-btn">Close</button>
+                </div>
+                <div id="comparisonContent"></div>
+                <div class="share-feedback" id="shareFeedback" aria-live="polite"></div>
+            </div>
+
+            <div class="show-all-container">
+                <button type="button" id="showAllBtn" class="primary-btn show-all-btn">View next 40 tools | عرض الأدوات التالية (40)</button>
+            </div>
+        </div>
+
+        <div class="finder-cta">
+            <h3>Get Specific AI Tools Recommendations Based On Your Work Department | AI Tool Recommender | مرشح أدوات الذكاء الاصطناعي، أداة البحث حسب القسم</h3>
+            <p class="finder-copy-en">Discover tailored AI tools for your department—sales, customer success, operations, or maintenance—so every team can move faster with the right automations and insights.</p>
+            <p class="finder-copy-ar">اكتشف أفضل أدوات الذكاء الاصطناعي المناسبة لطبيعة عملك والإدارة التي تتبع لها — سواء كنت في المبيعات، خدمة العملاء، التشغيل، أو الصيانة. أداة مُرشّح أدوات الذكاء الاصطناعي تساعدك على إيجاد الحل الأنسب لاحتياجات عملك بسهولة واحترافية.</p>
+            <a class="primary-btn cta-button" href="https://jservo.com/ai-tool-finder" target="_blank" rel="noopener">اختر مجالك وابدأ البحث الآن</a>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Expert answers to help you choose and deploy the right AI stack.</p>
+            </div>
+            <div class="faq-content">
+                <div class="faq-item">
+                    <div class="faq-question">How much should I budget for AI tools monthly?<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        <p>Most teams start between $75 and $300 per month to cover a core conversational assistant, a creative tool, and a workflow automation platform. Enterprise bundles often range from $500 to $1,500 per team once you add governance and custom integrations.</p>
+                        <p class="faq-answer-ar">تبدأ أغلب الفرق بميزانية شهرية تتراوح بين 75 و300 دولار لتغطية مساعد محادثة، منصة إبداعية، وأداة أتمتة أساسية. أما الباقات المؤسسية الشاملة فقد تصل إلى 500–1,500 دولار لكل فريق عند إضافة الحوكمة والتكاملات المخصصة.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Are AI tools secure for business data?<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        <p>Security varies widely. Prioritize vendors with enterprise agreements, SOC 2/ISO certifications, and clear data retention policies. Always enable SSO, set role-based permissions, and avoid sending sensitive data to consumer-grade plans.</p>
+                        <p class="faq-answer-ar">يختلف مستوى الأمان بين مزود وآخر، لذا ركّز على الشركات التي تقدم عقوداً مؤسسية وشهادات SOC 2 أو ISO مع سياسات واضحة للاحتفاظ بالبيانات. فعّل تسجيل الدخول الموحد، وطبّق صلاحيات الوصول، وتجنب إرسال بيانات حساسة إلى الخطط الموجهة للأفراد.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How long does it take to see ROI from AI tools?<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        <p>Expect quick wins within 30 days for writing, design, and meeting productivity tools. Automation and analytics platforms typically deliver measurable ROI in 60–90 days once workflows are tuned and teams are trained.</p>
+                        <p class="faq-answer-ar">يمكن تحقيق نتائج سريعة خلال 30 يوماً في أدوات الكتابة، التصميم، وإدارة الاجتماعات. بينما تحتاج منصات الأتمتة والتحليلات إلى 60–90 يوماً تقريباً لتحقيق عائد واضح بعد ضبط التدفقات وتدريب الفرق.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How do I choose the right AI tool for my business?<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        <p>Start with the outcome you need—content velocity, lead generation, customer retention, or operational efficiency. Map that to required integrations, budget, and compliance. Pilot one tool at a time, document the impact, then scale.</p>
+                        <p class="faq-answer-ar">ابدأ بتحديد الهدف الأساسي مثل زيادة المحتوى، توليد العملاء، رفع الاحتفاظ، أو تحسين العمليات. بعد ذلك، أربط المتطلبات بالتكاملات اللازمة، الميزانية، والالتزام التشريعي. جرّب أداة واحدة في كل مرة، وثّق النتائج، ثم قم بالتوسّع.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What's the difference between free and paid AI tools?<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        <p>Free tiers are perfect for validation but usually limit usage, integrations, and support. Paid plans unlock higher throughput, reliability SLAs, administrative controls, and commercial usage rights—essential for production workflows.</p>
+                        <p class="faq-answer-ar">الخطط المجانية مناسبة للاختبار الأولي لكنها تحد من عدد الطلبات، التكاملات، وخيارات الدعم. أما الاشتراكات المدفوعة فتمنحك سعة أكبر، اتفاقيات مستوى خدمة، صلاحيات إدارية، وحقوق استخدام تجارية ضرورية للبيئات الإنتاجية.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can AI tools replace human workers?<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        <p>AI excels at repeatable tasks and summarizing large volumes of data, while humans still drive strategy, relationships, and creative judgment. The most effective teams use AI to augment people, not replace them.</p>
+                        <p class="faq-answer-ar">تتفوق أدوات الذكاء الاصطناعي في المهام المتكررة وتحليل البيانات الضخمة، بينما يظل الإنسان محور الاستراتيجية، العلاقات، والقرار الإبداعي. أفضل النتائج تتحقق حين تُستخدم الأدوات الذكية لدعم الفرق البشرية وليس لاستبدالها.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2 class="cta-title">Need help rolling out the right AI systems?</h2>
+            <p class="cta-text">We combine IT, AI, and digital transformation expertise to streamline operations, reduce costs, and uncover new revenue opportunities. Our consultants help startups and SMEs filter the noise, orchestrate ERP and CRM workflows, and deploy reliable AI agents that work on autopilot. Book a strategy session to receive a tailored adoption roadmap, acceleration playbooks, and governance best practices that keep your business compliant while it scales.</p>
+            <p class="cta-text cta-text-ar">نقدّم خبرة متكاملة في تكنولوجيا المعلومات والذكاء الاصطناعي والتحول الرقمي لنساعدك على تحسين العمليات، خفض التكاليف، واستكشاف مصادر دخل جديدة. احجز جلسة استشارية لتحصل على خارطة طريق مخصصة، خطط تسريع، وإرشادات حوكمة تضمن توسعك بثقة وامتثال.</p>
+            <div class="contact-info">
+                <a href="https://wa.me/201011165461" class="contact-item" target="_blank" rel="noopener">WhatsApp: +20 101 116 5461</a>
+                <a href="mailto:yousef@jservo.com" class="contact-item">Email: yousef@jservo.com</a>
+                <a href="https://jservo.com/ai-transformation-blueprint" class="contact-item" target="_blank" rel="noopener">Our AI BluePrint</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><a href="https://jservo.com" target="_blank" class="footer-link">© 2024 J. SERVO LLC. All rights reserved.</a></p>
+        </div>
+    </div>
+</div>

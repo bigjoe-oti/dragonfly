@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI ROI Calculator | Professional Business Impact Assessment</title>
+    <meta name="description" content="Calculate realistic AI ROI with our professional assessment tool. Based on 200+ implementations. Get accurate projections for your AI transformation.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background: linear-gradient(135deg, #0f1419 0%, #1a202c 50%, #0f1419 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23804199' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            position: relative;
+        }
+
+        /* Glassmorphism base styles */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 8px 32px 0 rgba(31, 38, 135, 0.15),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .glass-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(128, 65, 153, 0.05) 0%, 
+                transparent 50%, 
+                rgba(32, 170, 207, 0.05) 100%);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            border-radius: 16px;
+        }
+
+        .main-title {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .methodology-section {
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .methodology-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .methodology-intro {
+            color: #94a3b8;
+            margin-bottom: 25px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .methodology-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            box-shadow: 
+                0 4px 16px 0 rgba(31, 38, 135, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .methodology-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 12px 32px 0 rgba(31, 38, 135, 0.2),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .methodology-card h4 {
+            color: #20aacf;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .methodology-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .methodology-card li {
+            padding: 4px 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .methodology-card li:before {
+            content: "•";
+            color: #804199;
+            position: absolute;
+            left: 0;
+        }
+
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .input-section, .results-section {
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(128, 65, 153, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* Enhanced Glassmorphism dropdown and input styling */
+        input[type="number"], select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #f1f5f9;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 4px 12px 0 rgba(0, 0, 0, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            position: relative;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%2320aacf' viewBox='0 0 16 16'%3e%3cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        input[type="number"]:hover, select:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 6px 20px 0 rgba(0, 0, 0, 0.15),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(32, 170, 207, 0.5);
+            box-shadow: 
+                0 0 0 3px rgba(32, 170, 207, 0.1),
+                0 8px 25px 0 rgba(0, 0, 0, 0.2),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        select option {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 12px 16px;
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .results-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 4px 16px 0 rgba(31, 38, 135, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            margin-bottom: 4px;
+            opacity: 0.3;
+            transition: opacity 0.5s ease;
+        }
+
+        .result-value.active {
+            opacity: 1;
+        }
+
+        .result-subtitle {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .confidence-indicator {
+            background: transparent;
+            border: none;
+            padding: 0;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .confidence-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .confidence-dot.animate {
+            transform: scale(1.6);
+        }
+
+        .confidence-high { background: #10b981; }
+        .confidence-medium { background: #f59e0b; }
+        .confidence-low { background: #ef4444; }
+
+        .confidence-text {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        /* Button Actions Section */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            box-shadow: 
+                0 4px 15px 0 rgba(31, 38, 135, 0.2),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Ripple effect on hover */
+        .btn-primary::before, .btn-secondary::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        /* Glow pulse animation */
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 
+                    0 4px 15px 0 rgba(31, 38, 135, 0.2),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            }
+            50% {
+                box-shadow: 
+                    0 4px 30px 0 rgba(128, 65, 153, 0.4),
+                    0 0 60px 0 rgba(32, 170, 207, 0.2),
+                    inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            }
+            100% {
+                box-shadow: 
+                    0 4px 15px 0 rgba(31, 38, 135, 0.2),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(32, 170, 207, 0.5);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .btn-primary:hover::before, .btn-secondary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:active, .btn-secondary:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-primary:disabled, .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            animation: none;
+        }
+
+        .btn-primary:disabled:hover, .btn-secondary:disabled:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 40px 30px;
+            border-radius: 16px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 36px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 
+                0 6px 20px 0 rgba(31, 38, 135, 0.25),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(32, 170, 207, 0.5);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .cta-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .calculator-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .methodology-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 10px;
+            }
+            
+            .main-title {
+                font-size: 1.8rem;
+            }
+            
+            .input-section, .results-section, .methodology-section {
+                padding: 20px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Loading animation */
+        .calculating {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .result-card.calculating .result-value:after {
+            content: "Calculating...";
+            font-size: 1rem;
+            font-weight: 400;
+            color: #94a3b8;
+        }
+
+        /* Validation styles */
+        .input-error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #20aacf;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header glass-panel" role="banner">
+            <h1 class="main-title">AI ROI Calculator</h1>
+            <p class="tagline">Professional Business Impact Assessment</p>
+            <p style="color: #64748b; font-size: 0.95rem;">Sophisticated analysis with transparent methodology</p>
+        </div>
+
+        <div class="methodology-section glass-panel" role="region" aria-labelledby="methodology-heading">
+            <h2 class="methodology-title" id="methodology-heading">Assessment Methodology</h2>
+            <div class="methodology-intro">
+                Our <strong>AI ROI calculator</strong> uses advanced methodology based on real-world data to provide you with accurate business impact projections. Simply complete the assessment below to discover how AI can transform your operations and generate measurable returns on investment.
+            </div>
+            
+            <div class="methodology-grid">
+                <div class="methodology-card" role="article" aria-label="Research Foundation details">
+                    <h4>Research Foundation</h4>
+                    <ul role="list">
+                        <li>Analysis of 200+ AI implementations across 15 industries</li>
+                        <li>McKinsey Global Institute AI adoption research</li>
+                        <li>MIT Sloan AI transformation case studies</li>
+                        <li>Deloitte State of AI enterprise surveys (2022-2024)</li>
+                        <li>J. SERVO proprietary client success database</li>
+                    </ul>
+                </div>
+
+                <div class="methodology-card" role="article" aria-label="Assessment Factors details">
+                    <h4>Assessment Factors</h4>
+                    <ul role="list">
+                        <li><strong>Industry Context:</strong> Sector-specific adoption patterns and success rates</li>
+                        <li><strong>Organizational Readiness:</strong> Technology infrastructure and change capability</li>
+                        <li><strong>Implementation Complexity:</strong> Scope, timeline, and resource requirements</li>
+                        <li><strong>Risk Adjustment:</strong> Common failure modes and mitigation strategies</li>
+                    </ul>
+                </div>
+
+                <div class="methodology-card" role="article" aria-label="Confidence Levels details">
+                    <h4>Confidence Levels</h4>
+                    <ul role="list">
+                        <li><strong>High:</strong> Strong organizational readiness, proven use case, clear ROI path</li>
+                        <li><strong>Medium:</strong> Good foundation with some implementation risks or unknowns</li>
+                        <li><strong>Low:</strong> Significant gaps in readiness, complex integration, or unproven ROI</li>
+                    </ul>
+                </div>
+
+                <div class="methodology-card" role="article" aria-label="Calculation Model details">
+                    <h4>Calculation Model</h4>
+                    <ul role="list">
+                        <li>Conservative efficiency gains based on peer implementations</li>
+                        <li>Phased rollout timeline with adoption curve modeling</li>
+                        <li>Full-cost accounting including training and change management</li>
+                        <li>Risk-adjusted returns with confidence intervals</li>
+                    </ul>
+                </div>
+
+                <div class="methodology-card" role="article" aria-label="External research and industry studies">
+                    <h4>Authoritative Insights</h4>
+                    <ul role="list">
+                        <li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank" rel="noopener noreferrer" style="color: #94a3b8; text-decoration: underline;">McKinsey Global Institute AI adoption research</a></li>
+                        <li><a href="https://mitsloan.mit.edu/teaching-resources-library/case-studies" target="_blank" rel="noopener noreferrer" style="color: #94a3b8; text-decoration: underline;">MIT Sloan AI transformation case studies</a></li>
+                        <li><a href="https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-generative-ai-in-enterprise.html" target="_blank" rel="noopener noreferrer" style="color: #94a3b8; text-decoration: underline;">Deloitte State of AI enterprise surveys (2022-2024)</a></li>
+                        <li><a href="https://www.cfauk.org/pi-listing/the-rise-of-ai-and-its-impact-within-the-investment-industry" target="_blank" rel="noopener noreferrer" style="color: #94a3b8; text-decoration: underline;">CFA Society UK: The rise of AI and its impact within the investment industry</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-container">
+            <div class="input-section glass-panel" role="form" aria-labelledby="assessment-heading">
+                <h2 class="section-title" id="assessment-heading">Business Assessment</h2>
+                
+                <div class="form-group">
+                    <label for="industry">Industry Sector</label>
+                    <select id="industry" aria-label="Select your industry sector" aria-required="true">
+                        <option value="technology">Technology & Software</option>
+                        <option value="financial">Financial Services</option>
+                        <option value="healthcare">Healthcare & Life Sciences</option>
+                        <option value="manufacturing">Manufacturing & Industrial</option>
+                        <option value="retail">Retail & E-commerce</option>
+                        <option value="marketing">Marketing & Advertising</option>
+                        <option value="consulting">Professional Services</option>
+                        <option value="education">Education & Training</option>
+                        <option value="logistics">Logistics & Supply Chain</option>
+                        <option value="energy">Energy & Utilities</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="company-size">Company Size</label>
+                    <select id="company-size" aria-label="Select your company size" aria-required="true">
+                        <option value="startup">Startup (1-50 employees)</option>
+                        <option value="small">Small Business (51-200 employees)</option>
+                        <option value="medium">Medium Enterprise (201-1000 employees)</option>
+                        <option value="large">Large Enterprise (1000+ employees)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="current-revenue">Annual Revenue (USD)</label>
+                    <input type="number" id="current-revenue" min="100000" max="10000000000" placeholder="1000000" 
+                           aria-label="Enter your annual revenue in USD" 
+                           aria-describedby="revenue-hint" 
+                           aria-required="true">
+                    <div class="input-hint" id="revenue-hint">Enter your current annual revenue (minimum $100,000)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ai-use-case">Primary AI Use Case</label>
+                    <select id="ai-use-case" aria-label="Select primary AI use case" aria-required="true">
+                        <option value="automation">Process Automation</option>
+                        <option value="analytics">Data Analytics & Insights</option>
+                        <option value="customer-service">Customer Service Enhancement</option>
+                        <option value="content">Content Generation & Marketing</option>
+                        <option value="predictive">Predictive Analytics</option>
+                        <option value="quality">Quality Control & Monitoring</option>
+                        <option value="personalization">Personalization & Recommendations</option>
+                        <option value="optimization">Operations Optimization</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="implementation-scope">Implementation Scope</label>
+                    <select id="implementation-scope" aria-label="Select implementation scope" aria-required="true">
+                        <option value="pilot">Pilot Project (1-2 departments)</option>
+                        <option value="department">Department-wide (3-5 departments)</option>
+                        <option value="enterprise">Enterprise-wide</option>
+                        <option value="customer-facing">Customer-facing applications</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="current-efficiency">Current Process Efficiency Rating</label>
+                    <select id="current-efficiency" aria-label="Rate your current process efficiency" aria-required="true">
+                        <option value="low">Low (Manual, time-intensive processes)</option>
+                        <option value="medium">Medium (Some automation, room for improvement)</option>
+                        <option value="high">High (Well-optimized, minimal inefficiencies)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tech-readiness">Technology Infrastructure Readiness</label>
+                    <select id="tech-readiness" aria-label="Rate your technology infrastructure readiness" aria-required="true">
+                        <option value="basic">Basic (Limited cloud/data infrastructure)</option>
+                        <option value="intermediate">Intermediate (Good foundation, some gaps)</option>
+                        <option value="advanced">Advanced (Modern, AI-ready infrastructure)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="change-readiness">Organizational Change Readiness</label>
+                    <select id="change-readiness" aria-label="Rate your organizational change readiness" aria-required="true">
+                        <option value="resistant">Resistant (Traditional, change-averse culture)</option>
+                        <option value="neutral">Neutral (Mixed readiness across teams)</option>
+                        <option value="adaptable">Adaptable (Innovation-focused culture)</option>
+                    </select>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-primary" id="calculate-btn" onclick="handleCalculateClick()" aria-label="Calculate AI ROI impact">
+                        Calculate Impact
+                    </button>
+                </div>
+            </div>
+
+            <div class="results-section glass-panel" role="region" aria-labelledby="results-heading" aria-live="polite">
+                <h2 class="section-title" id="results-heading">Impact Projection</h2>
+                
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-label">Projected Annual Savings</div>
+                        <div class="result-value" id="annual-savings" aria-label="Projected annual savings amount">$0</div>
+                        <div class="result-subtitle">Year 2-3 steady state</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label">Implementation Investment</div>
+                        <div class="result-value" id="implementation-cost" aria-label="Implementation investment amount">$0</div>
+                        <div class="result-subtitle">Total 18-month cost</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label">Net ROI (3-Year)</div>
+                        <div class="result-value" id="roi-percentage" aria-label="Net return on investment percentage">0%</div>
+                        <div class="result-subtitle" id="roi-category">Ready to calculate</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label">Payback Period</div>
+                        <div class="result-value" id="payback-period" aria-label="Payback period duration">0 months</div>
+                        <div class="result-subtitle">Break-even timeline</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label">Assessment Confidence</div>
+                        <div class="confidence-indicator" role="status" aria-live="polite">
+                            <div class="confidence-dot" id="confidence-dot" aria-hidden="true"></div>
+                            <div class="confidence-text" id="confidence-text">Ready to calculate</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-secondary" id="download-btn" onclick="downloadResults()" disabled aria-label="Download assessment results as PDF">
+                        <span class="btn-icon">📄</span>
+                        Download Results
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section glass-panel" role="complementary">
+            <h3 style="color: #f1f5f9; margin-bottom: 15px;">Ready to Transform Your Business with AI?</h3>
+            <p style="color: #94a3b8; margin-bottom: 25px;">Get a detailed implementation roadmap and refined ROI analysis from our AI strategy experts.</p>
+            <h3 style="color: #f1f5f9; margin-bottom: 15px;">Fill in the form below and let's talk!</h3>
+            <span class="icon">💬</span>
+            <div class="action-buttons">
+                <button class="btn-primary" type="button" onclick="requestConsultation()" aria-label="Request an AI consultation">
+                    Request Consultation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Industry-specific multipliers based on real adoption data
+        const industryMultipliers = {
+            'technology': { efficiency: 1.4, complexity: 0.8, adoption: 1.3 },
+            'financial': { efficiency: 1.3, complexity: 1.2, adoption: 1.1 },
+            'healthcare': { efficiency: 1.2, complexity: 1.4, adoption: 0.9 },
+            'manufacturing': { efficiency: 1.5, complexity: 1.0, adoption: 1.0 },
+            'retail': { efficiency: 1.3, complexity: 0.9, adoption: 1.2 },
+            'marketing': { efficiency: 1.6, complexity: 0.7, adoption: 1.4 },
+            'consulting': { efficiency: 1.4, complexity: 0.8, adoption: 1.2 },
+            'education': { efficiency: 1.1, complexity: 1.1, adoption: 0.8 },
+            'logistics': { efficiency: 1.4, complexity: 1.0, adoption: 1.0 },
+            'energy': { efficiency: 1.2, complexity: 1.3, adoption: 0.9 }
+        };
+
+        const useCaseMultipliers = {
+            'automation': { savings: 1.3, complexity: 0.9 },
+            'analytics': { savings: 1.1, complexity: 1.1 },
+            'customer-service': { savings: 1.2, complexity: 0.8 },
+            'content': { savings: 1.4, complexity: 0.7 },
+            'predictive': { savings: 1.2, complexity: 1.2 },
+            'quality': { savings: 1.1, complexity: 1.0 },
+            'personalization': { savings: 1.3, complexity: 1.0 },
+            'optimization': { savings: 1.2, complexity: 1.1 }
+        };
+
+        const scopeMultipliers = {
+            'pilot': { cost: 0.3, savings: 0.2, timeline: 0.5 },
+            'department': { cost: 0.7, savings: 0.6, timeline: 0.8 },
+            'enterprise': { cost: 1.5, savings: 1.0, timeline: 1.5 },
+            'customer-facing': { cost: 1.2, savings: 1.3, timeline: 1.2 }
+        };
+
+        const currencyFormatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        });
+
+        const logoDataUri = 'data:image/png;base64,' +
+            'iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAMAAAD8CC+4AAAC+lBMVEUAAACGSpKDRZqDRZuCRJqCRJqCRJqFRpuCQ5mCRJqCRJp+QJeCRJqBRJqERZuCRJqC' +
+            'RJqCQ5qBQ5mCRJqCRJqiZquYWaSNTZ6GSImPS4eJR5BLlcIcq9DO3+XO4OXQ3+XU4ubT4ebU4OfQ3+e92uS62OJlvdVZutUrrtEvsskRr6QBrY4Aq4wCp5UB' +
+            'rY4BrI3qbCrsez/wcyntayjtcyzxgiLtZCPhYiLvcSbtby7tcCTyjTP3rCL6viX3vi73qhv4vRz6wBP3tS74o0D7tEr6s1rvpkzysmP6unT+17HblDe8ZSmf' +
+            'djO0ejHMYSXorh/zniGUUmaGNZSPU2ehZaqiZqqYWaS9XZjqW2fkkSfuli6WaYSJXZZhcqsordAfqs8trdAyrtAAu9iCRJqCQ5qBQZl/QJl9P5iERZuGRpuI' +
+            'SJyKSp2MTZ6PT5+RUaCTU6GUVaKXWKOZW6WcXqaeYaihZaqCSpt+VZ92Y6Vydqteh7Zin7ZOo8I0nsktr9EordAjrNAgqs8bqs8FqM8AttUAr94Ctu02u989' +
+            's9NEtdRMuNZVutZgvthswdl5xduDyNyNy92az9+k0uCs1OG01+O62ePA2+PF3eXJ3uXM3+XP4OUCrY0Aro8Br5AAsJEBqosMlbI1gaI1sNJVw+RBx/VszvGH' +
+            '1PJ7lqich5C+gHHFZ3ewXGSzaE3GYVDQaTvTZiLGYSCzaCfNeiHaeiXahh/kkB7piCDyhCHziCHzjSD0kB/0kx71lh72mR31nh32oxz6ohz4qBv3rBv4rxr3' +
+            'shn5thf5uxb6wRP8ryT7qx/6pSr5mSv3lDb3izD3iyb1gCTwfyHxeiLvdyLvdCLucSPubiPuaiPuZyPsZCTwbi7zcjDybDXxZTjwXT7vV0XuT0vsR1PmP17q' +
+            'H1ntH0XvOj7wSybqUCTwWiPeXCPhbSXofSPzdyn1fDHbf0TQi1rfYlr6oDX6qzX8si39wzn/z1fGjiTaoiDtlx2dVXmHO5aIKY94PY5zN4ZtSo6yseI2AAAA' +
+            'Y3RSTlMALiQ4RFFbaXeGkp6lrra+ytXi7vjp09Ph+/7+9dzJu6mTaGFLMl6DfEgoVXeixeH91uDPu6eSinReTlJRZIqrvOXm5tHArY1Zcn9llsja/vz9/ti0' +
+            'i2VFUzMZBA8Zs83S0cnCjJQ9AAAfNklEQVR42uzc204bRxzHcTdRWlWVkCI18BxNG6klQMxFpV7mwnYFdq84xC4HG4xfDRuDQQ4le2vOPEH6CNx2Zncne2B3' +
+            'Zk2VyVr5foyQcpGrn37zn5ldUwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' +
+            'AAAAAAAAAAAAAAAAAAAK31RK0zozM9MzJs/T/fh9AflSLb/Y22u3xU97V9rxtYRms7XdFL+a2+LT3N7a3pI2PRuuv4WG4P6qSysrq8La2tr6+vo71w8F5Epl' +
+            'T2oLu74dpSU1XdvSlm/Tt6FilxouN3SZ+pq0LhF63lRLHT/0IPZo5llDDzddVl2FTtPzpjrd6aQ1veVRoUvR0Dd0TSf03CqJzDvxpqvUTaHHmh4LneU9p8od' +
+            'EborknnG0DcyLe+Eni9PO5Ih9NaD0DczNX2V0HOp5IXeyRr6lq7pDZefOTM9r56oyBNDb2UO3TuqM9MnQsUretD0Mc/pSSOd5T3fquVOZKbvytDjVVdFN2/k' +
+            'guWd0HMsGOmJTW/53NA1TY9v5ETkLO95VX3R0e/edwyh62/kVtnI5VBNhD7eOV3b9AYbuUmQ1nQ1002hq8ds3MhNkFInNtTjGznDkU2/vBN6LpUTz+k76Zcz' +
+            '2XbvhJ5nFf1MNy7vkdAbwZGNp2w5VgsN9bbh2aoXuubuveHicib3ytqmq5FuOrKp1Z0HLhPhr8zndN3zdD90XqKYEBXtU7Ydw/P06O49yJyNXL6VReYP797H' +
+            'yzwSuhR5tPqO0HOn3El/tGo6pyfdvdP0/KuK1FOPbBlnetJLFGzk8u3JtMx8nCNbfCOXOtPXCT23npb22ulvzmS8nAmHvrqywpcdcq/25M/Ks8on31aSfSc/' +
+            'gvwd9+w5M33SVQvjmgrPdEL/Okxx9/718UMX2MjZtzyn8Vp9xE/crPhRn8DrP2ZD//5ttpBiigcuX8pccfHsw5nwj3B6+l4aCifSsWcwOJIOhX7/QOgJXddI' +
+            'OpcuLi4uLy+vrq5u766vb29ubm6Fu7uPPxUUc9MJ3Ya5xQ/CWVLoQ5X6QIY+UJn3VeY9Gbkf+uhCUKFf31xf32QNnbt322pFx81cpR6ELojEZeh+7PdHh0d+' +
+            '6MJ+TwiKLqseCl1knjl0jmyWLS+KzFObLh17VQ+W935oeQ+lrgn9358Ln2Rb3tm9f0a1RcdRTVdFT1ve3x65Te8fHrjLuxrqo66x6Xf60NnI2VUUkTv6pp8c' +
+            'q9RjTd8XmUujpKYLY4XO15qsWXBU6Mm796G3vKuRHpnpInI/dbWRe2TT68x0m8RAF7I1XfKKLlJ/MNLPtTNdH7pXdb6fbsmCk7npourxc/p+L9r0R4fOX5ey' +
+            'qegIpt17+Jyulne1kfMi73qre3rot/rQuZyxaMkxNV0VXRi8HdzHjmwqdWPTDUe2usRTNjvmHccw04cPm64yD5reHWmbfpfpcoamW7KQ0vTThMsZdU4PH9nU' +
+            '7t0LXXNkM4ReZyNnT9ExzfSg6QN/IxfMdKkbqvp5+pHNELqbOn+Jwo4Fx5U+04fhpgtB06XQTD/Xz3TD7p1zukVypo9xI+c3vR9vumGmmzdy3L3bU10yNV2F' +
+            'Lg28zbtqes+7kuvuq0erF5qm65f3On+UwKbFTE0/8YoueDs51XR1924+p398WYjhGvaLeeNI6bv3YWR5j+/eg52cpHvKpm96o8E53aK59KYP3web9+SZftDr' +
+            'hm9hdXfvGWY6b8NaU9TP9PBQPzr2LmeEyEsUwetS6ed0Q+i8LmXVUmLTT+Oru7qSu480fT/z7t2wvNf5soNV88kzXYqkPvCbrnldSrN7NzSdjZxl85rd+8kw' +
+            '8jz9PvY2rKQil01PX94NTefu3bLqfLaZHntdyn+g3o3fvV8+Znmn6dYtLerP6cee4JiedvfuNf1q/I2cG/oqoVuzXCvU5ou60NNejFTvyI2uzk0z3dB0nqfb' +
+            'VnXbPr/wxuSV+sT9Ln/98url/w2dplsz/nfK1X+rhj7Cr+kbuf/YO7PmKKoojl8XLIFCND4iIEhEuntmSiwW/QD4zpPaGRWHMfgJBCwmM7eDLCYkA2SZtSFu' +
+            'FA/6XazS+KpVgSqr9J1MrOKc7r49vS+pmm6m6vx60pn3X/7nnnt6SUx5F0mvkPR8kGRFUWRpG38Kp8OTHiP9K3rJf45IcqFY6gGlgiyxlERIT1DeKwAlPXuk' +
+            'Qrfb6fb7vV631+/1izJLxWlDMvJ4/bGDjccbG+FX2Z7Y0JqePVKx0zXoGfSBUrj2ySNwuFA//OffAH7B49d3y2XJoIyHzRTb8+TCBbOqn6cLLpmjdADbOmYd' +
+            'KbAgJg/tX11ZWVleWV5eWlq6e/funTu3b9/+yeJH5HuTaxZ17cb162tra7VabWZmpl5/w+aKhXb5LG3ZskUtdBBn1vsGJYl5UQ+1UDlat6WDdaDZbC4uLiwu' +
+            'LNwC5ufnTPE30foNh/R6o94QzNrsO1sl6VmiFkG423rX0t7zWp/av9pqrRpJ90hvonSwDqB0ZG7uO+DmTXQ+lA40vMzuo6Rni3AeUOF7/bLHeQsA6b6kN42k' +
+            'AygdQOeAKd2VdHTOeQOAs0t6ldb0rCh0dDh81q2sl5iTA612KzrpKF04D0u6UM3tL1je6ZVi2SEL3z7r/m7uULstpC+vxEk3tAdJF77hxK1vJD1bSrpbus+6' +
+            'xARH2gA6N6Iet6bb1R2lA46kc6FdfEPptGXLDEXXDet6qPUiE7zZFkkP7t4Xm741fSh9zSXdA3XvmVLSgbCsd3vOqE8azmPW9AXAVd2HjVzNlu6Bc5KeJTIq' +
+            'F9IDe/ievaofbkclvRnVvbuTblV1SnpOFHXLOorXg/brEHbRxgnn9pIeLh2dzzvWdHfSXdY9jRyt6SOnpJt0oiq8JKQjID0q6QuJ9ukNWtPzQ7KUh2hH6WBd' +
+            'mXJLj1rTE+3Tnd07nkh6lsjCOXywvgeu6/2CFJ/0ptG9J9qn45ruauPM4QxdT88IRRdRD896r1eUh9LjJnIL8UkXrj1rOr0xMiMs6RELO3ZyRVl074kncrcC' +
+            'kl4Tl1ZFUSfpuaDYvoX1oB7ekj4pnANJunfLeVQjx61fNJHLEJAen3VIuncit5pkTQ+byDUA2qfnh6wnsV44Npy9t5INZ5wTOf8+XfRv1tVVmr1nihQt3bTe' +
+            'V8piPNOypS/HXk+fi+jeG5z26fmhJ7F+jAkOtlsx+3R/Hxd+PR3gJD17il7nqB3OTusdlQnUA0HlHcCkA5F3zojyLmw7RjTUvWeJosdnvciGqAcjkr6IDJ3P' +
+            'x905Q+U9J3Q9TntXZk7e2g/OEb90kfTY8m5nHOEkPWsKuh5jvcTcqIcPrjiTvnQHaIqb3pEfTL61uWbu07lWr/mSjtLpenq2THl9wzEcz+BJZj7UySMeJs/8' +
+            'F84Z6ZjB20drdc/sHSHpmaPoguA5fJHFosLPyfU/XA+yPXq0gYfBKSYeaP5Us6RHr+m0Tx81Rd2P1b/jqcySoJ5wvj0Qn1r93XrJP3CSCd6pUyP3TKCWdB/D' +
+            'rCd9ZvlE+H92cEqvJZa+ixEjRIqwHv7kakLp627pji0b5zxK+suMGCXlUpBzPY3zlEk3dUdJf+0FRowUteB3Dp9S0toeIT086dHlnYI+clQ5IOwKS0EK6Q3n' +
+            'sy085CaK5xkxalRV8WgvpIi5If23pNJN6zxyn76TEZkgK2L3VirIyXZq20p6fHmffn2KERkhyQqS/t1S4dL/9EsfBjz00uqLjMgSdXuvFEwlncfcRPESI8aB' +
+            'VOWdu5xzl3TK+fiQQnojek1/ldbzcSGVdA4fj/RNU/r5vTSUGR9SSMeoc095P7dj9yt79+zaQSkfJ9JJ';
+
+        let calculatedResults = null;
+        const calculateBtn = document.getElementById('calculate-btn');
+        const downloadBtn = document.getElementById('download-btn');
+
+        function handleCalculateClick() {
+            if (!calculateBtn) return;
+
+            calculateBtn.disabled = true;
+            calculateBtn.innerHTML = 'Calculating...';
+            calculateBtn.setAttribute('aria-busy', 'true');
+            downloadBtn.disabled = true;
+
+            setTimeout(() => {
+                const success = calculateImpact();
+                calculateBtn.innerHTML = 'Calculate Impact';
+                calculateBtn.disabled = false;
+                calculateBtn.removeAttribute('aria-busy');
+
+                if (success) {
+                    downloadBtn.disabled = false;
+                }
+            }, 500);
+        }
+
+        function calculateImpact() {
+            const industry = document.getElementById('industry').value;
+            const companySize = document.getElementById('company-size').value;
+            const revenueInput = document.getElementById('current-revenue');
+            const revenueValue = revenueInput.value.trim();
+            const revenue = Number(revenueValue);
+            const useCase = document.getElementById('ai-use-case').value;
+            const scope = document.getElementById('implementation-scope').value;
+            const currentEfficiency = document.getElementById('current-efficiency').value;
+            const techReadiness = document.getElementById('tech-readiness').value;
+            const changeReadiness = document.getElementById('change-readiness').value;
+
+            if (!Number.isFinite(revenue) || revenueValue === '') {
+                revenueInput.classList.add('input-error');
+                showError('Please enter a valid annual revenue (minimum $100,000)');
+                calculatedResults = null;
+                return false;
+            }
+
+            if (revenue < 100000) {
+                revenueInput.classList.add('input-error');
+                showError('Please enter a valid annual revenue (minimum $100,000)');
+                calculatedResults = null;
+                return false;
+            }
+
+            revenueInput.classList.remove('input-error');
+
+            // Activate result opacity
+            activateResults();
+
+            // Base calculations with industry context
+            const industryData = industryMultipliers[industry];
+            const useCaseData = useCaseMultipliers[useCase];
+            const scopeData = scopeMultipliers[scope];
+
+            if (!industryData || !useCaseData || !scopeData) {
+                calculatedResults = null;
+                showError('Unable to calculate results with the current selections.');
+                return false;
+            }
+
+            // Company size factors
+            const sizeFactors = {
+                'startup': { baseCost: 50000, efficiency: 1.2, complexity: 0.8 },
+                'small': { baseCost: 150000, efficiency: 1.1, complexity: 0.9 },
+                'medium': { baseCost: 400000, efficiency: 1.0, complexity: 1.0 },
+                'large': { baseCost: 800000, efficiency: 0.9, complexity: 1.2 }
+            };
+
+            const sizeData = sizeFactors[companySize];
+
+            // Efficiency baseline (what percentage of revenue could be optimized)
+            let efficiencyBaseline = 0.08; // 8% baseline
+            if (currentEfficiency === 'low') efficiencyBaseline = 0.12;
+            if (currentEfficiency === 'medium') efficiencyBaseline = 0.08;
+            if (currentEfficiency === 'high') efficiencyBaseline = 0.04;
+
+            // Technology readiness impact
+            let techMultiplier = 1.0;
+            if (techReadiness === 'basic') techMultiplier = 0.7;
+            if (techReadiness === 'intermediate') techMultiplier = 0.9;
+            if (techReadiness === 'advanced') techMultiplier = 1.1;
+
+            // Change readiness impact
+            let changeMultiplier = 1.0;
+            if (changeReadiness === 'resistant') changeMultiplier = 0.6;
+            if (changeReadiness === 'neutral') changeMultiplier = 0.8;
+            if (changeReadiness === 'adaptable') changeMultiplier = 1.0;
+
+            // Calculate realistic annual savings
+            const potentialSavings = revenue * efficiencyBaseline;
+            const adjustedSavings = potentialSavings * 
+                industryData.efficiency * 
+                useCaseData.savings * 
+                scopeData.savings * 
+                sizeData.efficiency * 
+                techMultiplier * 
+                changeMultiplier * 
+                0.7; // Conservative factor
+
+            // Calculate implementation cost
+            const baseCost = sizeData.baseCost * scopeData.cost;
+            const complexityCost = baseCost * industryData.complexity * useCaseData.complexity * sizeData.complexity;
+            const techCost = techReadiness === 'basic' ? baseCost * 0.4 : (techReadiness === 'intermediate' ? baseCost * 0.2 : 0);
+            const changeCost = changeReadiness === 'resistant' ? baseCost * 0.3 : (changeReadiness === 'neutral' ? baseCost * 0.15 : 0);
+            
+            const totalImplementationCost = baseCost + complexityCost + techCost + changeCost;
+
+            // Calculate 3-year ROI
+            const yearOneRealization = adjustedSavings * 0.3;
+            const yearTwoRealization = adjustedSavings * 0.7;
+            const yearThreeRealization = adjustedSavings * 1.0;
+            const threeYearSavings = yearOneRealization + yearTwoRealization + yearThreeRealization;
+            const threeYearROI = ((threeYearSavings - totalImplementationCost) / totalImplementationCost) * 100;
+
+            // Calculate payback period
+            let paybackMonths = 0;
+            let cumulativeSavings = 0;
+            let monthlySavings = adjustedSavings / 12;
+            
+            for (let month = 1; month <= 60; month++) {
+                if (month <= 12) {
+                    cumulativeSavings += monthlySavings * 0.3;
+                } else if (month <= 24) {
+                    cumulativeSavings += monthlySavings * 0.7;
+                } else {
+                    cumulativeSavings += monthlySavings;
+                }
+                
+                if (cumulativeSavings >= totalImplementationCost) {
+                    paybackMonths = month;
+                    break;
+                }
+            }
+
+            // Calculate confidence level
+            let confidenceScore = 50;
+            
+            if (['technology', 'marketing', 'retail'].includes(industry)) confidenceScore += 15;
+            if (['manufacturing', 'logistics'].includes(industry)) confidenceScore += 10;
+            if (['healthcare', 'financial'].includes(industry)) confidenceScore += 5;
+            
+            if (['automation', 'content', 'customer-service'].includes(useCase)) confidenceScore += 15;
+            if (['analytics', 'optimization'].includes(useCase)) confidenceScore += 10;
+            if (['predictive', 'personalization'].includes(useCase)) confidenceScore += 5;
+            
+            if (techReadiness === 'advanced') confidenceScore += 10;
+            if (techReadiness === 'intermediate') confidenceScore += 5;
+            if (techReadiness === 'basic') confidenceScore -= 10;
+            
+            if (changeReadiness === 'adaptable') confidenceScore += 10;
+            if (changeReadiness === 'neutral') confidenceScore += 0;
+            if (changeReadiness === 'resistant') confidenceScore -= 15;
+            
+            if (scope === 'pilot') confidenceScore += 10;
+            if (scope === 'enterprise') confidenceScore -= 5;
+
+            confidenceScore = Math.max(20, Math.min(85, confidenceScore));
+
+            // Store results for PDF generation
+            calculatedResults = {
+                industry,
+                companySize,
+                revenue,
+                useCase,
+                scope,
+                currentEfficiency,
+                techReadiness,
+                changeReadiness,
+                adjustedSavings,
+                totalImplementationCost,
+                threeYearROI,
+                paybackMonths,
+                confidenceScore
+            };
+
+            // Update display
+            updateResults(adjustedSavings, totalImplementationCost, threeYearROI, paybackMonths, confidenceScore);
+            return true;
+        }
+
+        function updateResults(savings, cost, roi, payback, confidence) {
+            document.getElementById('annual-savings').textContent = formatCurrency(savings);
+            document.getElementById('implementation-cost').textContent = formatCurrency(cost);
+            document.getElementById('roi-percentage').textContent = Math.round(roi) + '%';
+            document.getElementById('payback-period').textContent = payback > 0 ? payback + ' months' : '60+ months';
+
+            // ROI category
+            let roiCategory = '';
+            if (roi >= 200) roiCategory = 'Exceptional Return';
+            else if (roi >= 100) roiCategory = 'Strong Return';
+            else if (roi >= 50) roiCategory = 'Good Return';
+            else if (roi >= 20) roiCategory = 'Moderate Return';
+            else roiCategory = 'Low Return';
+            
+            document.getElementById('roi-category').textContent = roiCategory;
+
+            // Confidence indicator with animation
+            const confidenceDot = document.getElementById('confidence-dot');
+            const confidenceText = document.getElementById('confidence-text');
+            
+            confidenceDot.classList.add('animate');
+            setTimeout(() => confidenceDot.classList.remove('animate'), 300);
+            
+            if (confidence >= 70) {
+                confidenceDot.className = 'confidence-dot confidence-high animate';
+                confidenceText.textContent = `High Confidence (${confidence}%)`;
+            } else if (confidence >= 50) {
+                confidenceDot.className = 'confidence-dot confidence-medium animate';
+                confidenceText.textContent = `Medium Confidence (${confidence}%)`;
+            } else {
+                confidenceDot.className = 'confidence-dot confidence-low animate';
+                confidenceText.textContent = `Low Confidence (${confidence}%)`;
+            }
+        }
+
+        function activateResults() {
+            document.querySelectorAll('.result-value').forEach(el => el.classList.add('active'));
+        }
+
+        function formatCurrency(amount) {
+            if (typeof amount !== 'number' || !Number.isFinite(amount)) {
+                return '$0';
+            }
+
+            const safeAmount = amount >= 0 ? Math.floor(amount) : Math.ceil(amount);
+            return currencyFormatter.format(safeAmount);
+        }
+
+        function showError(message) {
+            alert(message);
+        }
+
+        function requestConsultation() {
+            if (!calculatedResults) {
+                showError('Please calculate results before requesting a consultation.');
+                return;
+            }
+
+            const confidenceSummary = document.getElementById('confidence-text').textContent;
+            const results = {
+                savings: formatCurrency(calculatedResults.adjustedSavings),
+                cost: formatCurrency(calculatedResults.totalImplementationCost),
+                roi: Math.round(calculatedResults.threeYearROI) + '%',
+                payback: calculatedResults.paybackMonths > 0 ? calculatedResults.paybackMonths + ' months' : '60+ months',
+                confidence: confidenceSummary
+            };
+            
+            localStorage.setItem('aiCalculatorResults', JSON.stringify(results));
+            window.open('https://jservo.com/consultation', '_blank');
+        }
+
+        function downloadResults() {
+            if (!calculatedResults) {
+                showError('Please calculate results first');
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Title
+            doc.setFontSize(24);
+            doc.setTextColor(128, 65, 153);
+            doc.text('AI ROI Assessment Results', 20, 30);
+            
+            // Date
+            doc.setFontSize(10);
+            doc.setTextColor(100);
+            doc.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 40);
+            
+            // Company Information
+            doc.setFontSize(14);
+            doc.setTextColor(0);
+            doc.text('Company Profile', 20, 55);
+            
+            doc.setFontSize(11);
+            doc.setTextColor(60);
+            doc.text(`Industry: ${calculatedResults.industry.replace('-', ' ').charAt(0).toUpperCase() + calculatedResults.industry.slice(1)}`, 20, 65);
+            doc.text(`Company Size: ${calculatedResults.companySize.replace('-', ' ').charAt(0).toUpperCase() + calculatedResults.companySize.slice(1)}`, 20, 72);
+            doc.text(`Annual Revenue: ${formatCurrency(calculatedResults.revenue)}`, 20, 79);
+            
+            // Assessment Details
+            doc.setFontSize(14);
+            doc.setTextColor(0);
+            doc.text('Assessment Details', 20, 94);
+            
+            doc.setFontSize(11);
+            doc.setTextColor(60);
+            doc.text(`AI Use Case: ${calculatedResults.useCase.replace('-', ' ').charAt(0).toUpperCase() + calculatedResults.useCase.slice(1)}`, 20, 104);
+            doc.text(`Implementation Scope: ${calculatedResults.scope.replace('-', ' ').charAt(0).toUpperCase() + calculatedResults.scope.slice(1)}`, 20, 111);
+            doc.text(`Current Efficiency: ${calculatedResults.currentEfficiency.charAt(0).toUpperCase() + calculatedResults.currentEfficiency.slice(1)}`, 20, 118);
+            doc.text(`Tech Readiness: ${calculatedResults.techReadiness.charAt(0).toUpperCase() + calculatedResults.techReadiness.slice(1)}`, 20, 125);
+            doc.text(`Change Readiness: ${calculatedResults.changeReadiness.charAt(0).toUpperCase() + calculatedResults.changeReadiness.slice(1)}`, 20, 132);
+            
+            // Results
+            doc.setFontSize(14);
+            doc.setTextColor(0);
+            doc.text('Projected Impact', 20, 147);
+            
+            doc.setFontSize(11);
+            doc.setTextColor(60);
+            doc.text(`Annual Savings (Year 2-3): ${formatCurrency(calculatedResults.adjustedSavings)}`, 20, 157);
+            doc.text(`Implementation Investment: ${formatCurrency(calculatedResults.totalImplementationCost)}`, 20, 164);
+            doc.text(`3-Year ROI: ${Math.round(calculatedResults.threeYearROI)}%`, 20, 171);
+            doc.text(`Payback Period: ${calculatedResults.paybackMonths > 0 ? calculatedResults.paybackMonths + ' months' : '60+ months'}`, 20, 178);
+            doc.text(`Assessment Confidence: ${calculatedResults.confidenceScore}%`, 20, 185);
+            
+            // Disclaimer
+            doc.setFontSize(9);
+            doc.setTextColor(100);
+            doc.text('Note: These results are estimates based on industry benchmarks. Actual results may vary.', 20, 205);
+            doc.text('We recommend professional consultation for detailed planning.', 20, 211);
+            
+            // Footer with Company Branding
+            // Add company logo
+            try {
+                // Add logo - 40x40px (maintaining aspect ratio from 500x500)
+                doc.addImage(logoDataUri, 'PNG', 20, 220, 40, 40);
+            } catch (error) {
+                console.log('Logo could not be loaded');
+            }
+            
+            // Company Slogan (adjusted position to align with logo)
+            doc.setFontSize(12);
+            doc.setTextColor(128, 65, 153);
+            doc.setFont(undefined, 'bold');
+            doc.text('J. Servo LLC. Your AI Partner In Business', 70, 235);
+            
+            // Contact Information
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(60);
+            doc.text('WhatsApp: +201011165461 | Email: yousef@jservo.com', 70, 245);
+            
+            // Website
+            doc.setTextColor(32, 170, 207);
+            doc.text('www.jservo.com', 70, 253);
+            
+            // Add a separator line above footer
+            doc.setDrawColor(128, 65, 153);
+            doc.setLineWidth(0.5);
+            doc.line(20, 215, 190, 215);
+            
+            // Save the PDF
+            doc.save('AI_ROI_Assessment_Results.pdf');
+        }
+    </script>
+</body>
+</html>

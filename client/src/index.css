@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-syne text-textPrimary bg-darkBg overflow-x-hidden min-h-screen relative tracking-tight;
+    background: linear-gradient(135deg, #0f1419 0%, #1a202c 50%, #0f1419 100%);
+  }
+
+  body::before {
+    content: '';
+    @apply fixed inset-0 pointer-events-none z-0 opacity-40;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(128, 65, 153, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(32, 170, 207, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(4, 172, 140, 0.1) 0%, transparent 50%);
+  }
+
+  #root {
+    @apply relative z-10 w-full max-w-[1200px] mx-auto px-4 py-8 flex flex-col gap-8;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply relative bg-glassBg border border-glassBorder shadow-glass rounded-2xl overflow-hidden transition-all duration-300;
+    backdrop-filter: blur(20px);
+  }
+
+  .glass-panel::before {
+    content: '';
+    @apply absolute inset-0 rounded-[inherit] pointer-events-none;
+    background: linear-gradient(
+      135deg,
+      rgba(128, 65, 153, 0.05) 0%,
+      transparent 50%,
+      rgba(32, 170, 207, 0.05) 100%
+    );
+  }
+
+  .glass-input {
+    @apply w-full px-4 py-3 rounded-xl text-textPrimary text-base transition-all duration-300 outline-none;
+    background-color: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .custom-placeholder::placeholder {
+    font-weight: 405;
+    font-size: 80%;
+    letter-spacing: 0.7px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .glass-input:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  .glass-input:focus {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(32, 170, 207, 0.5);
+    box-shadow:
+      0 0 0 3px rgba(32, 170, 207, 0.1),
+      0 8px 25px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  /* Custom Scrollbar for Glass Input Textarea */
+  .glass-input::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .glass-input::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+  }
+
+  .glass-input::-webkit-scrollbar-thumb {
+    background: rgba(128, 65, 153, 0.3);
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-input::-webkit-scrollbar-thumb:hover {
+    background: rgba(32, 170, 207, 0.5);
+  }
+
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 px-4 py-[14px] text-[13px] text-white rounded-xl cursor-pointer overflow-hidden transition-all duration-300;
+    background-color: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 4px 15px 0 rgba(31, 38, 135, 0.2),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .btn-primary::before {
+    content: '';
+    @apply absolute top-1/2 left-1/2 w-0 h-0 rounded-full -translate-x-1/2 -translate-y-1/2 transition-all duration-[600ms] pointer-events-none z-0;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    @apply -translate-y-0.5 scale-[1.02];
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(32, 170, 207, 0.5);
+    animation: pulse-glow 2s infinite;
+  }
+
+  .btn-primary:hover:not(:disabled)::before {
+    @apply w-[300px] h-[300px];
+  }
+
+  .btn-primary:active:not(:disabled) {
+    @apply translate-y-0 scale-[0.98];
+  }
+
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow:
+      0 4px 15px 0 rgba(31, 38, 135, 0.2),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  50% {
+    box-shadow:
+      0 4px 30px 0 rgba(128, 65, 153, 0.4),
+      0 0 60px 0 rgba(32, 170, 207, 0.2),
+      inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+  }
+
+  100% {
+    box-shadow:
+      0 4px 15px 0 rgba(31, 38, 135, 0.2),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* React Flow Theming Overrides */
+.react-flow__background {
+  background-color: transparent !important;
+}
+
+.react-flow__panel {
+  background-color: rgba(20, 20, 25, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0.5rem !important;
+  color: white !important;
+}
+
+.react-flow__controls {
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.5) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.react-flow__controls button {
+  background-color: rgba(128, 65, 153, 0.9) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  fill: white !important;
+  width: 36px !important;
+  height: 36px !important;
+  transition: all 0.2s ease;
+}
+
+.react-flow__controls button:hover {
+  background-color: rgba(32, 170, 207, 0.9) !important;
+}
+
+/* Zero-Dependency CSS Tooltips */
+.node-tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.node-tooltip-content {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1000;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 12px;
+  width: 280px;
+  padding: 12px;
+  background: rgba(17, 19, 24, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s;
+  pointer-events: none;
+}
+
+.node-tooltip-container:hover .node-tooltip-content {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(-50%) translateX(5px);
+}
+
+.tooltip-stage {
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.tooltip-desc {
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+/* Arrow */
+.node-tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent rgba(255, 255, 255, 0.15) transparent transparent;
+}
+
+/* Node Label Text — adaptive word-break for React Flow nodes */
+.node-label-text {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  line-height: 1.25;
+}
+
+/* Export Button Base — used for n8n export buttons in FlowCanvas */
+.btn-export-base {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-export-base:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
